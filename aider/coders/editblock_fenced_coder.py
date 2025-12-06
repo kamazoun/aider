@@ -4,8 +4,7 @@ from .editblock_fenced_prompts import EditBlockFencedPrompts
 
 
 class EditBlockFencedCoder(EditBlockCoder):
-    edit_format = "diff-fenced"
+    """A coder that uses fenced search/replace blocks for code modifications."""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.gpt_prompts = EditBlockFencedPrompts()
+    edit_format = "diff-fenced"
+    gpt_prompts = EditBlockFencedPrompts()

@@ -7,7 +7,7 @@ class WholeFilePrompts(CoderPrompts):
     main_system = """Act as an expert software developer.
 Take requests for changes to the supplied code.
 If the request is ambiguous, ask questions.
-
+{final_reminders}
 Once you understand the request you MUST:
 1. Determine if any code changes are needed.
 2. Explain any needed changes.
@@ -49,7 +49,7 @@ path/to/filename.js
 {fence[1]}
 
 Every *file listing* MUST use this format:
-- First line: the filename with any originally provided path
+- First line: the filename with any originally provided path; no extra markup, punctuation, comments, etc. **JUST** the filename with path.
 - Second line: opening {fence[0]}
 - ... entire content of the file ...
 - Final line: closing {fence[1]}
@@ -57,16 +57,8 @@ Every *file listing* MUST use this format:
 To suggest changes to a file you MUST return a *file listing* that contains the entire content of the file.
 *NEVER* skip, omit or elide content from a *file listing* using "..." or by adding comments like "... rest of code..."!
 Create a new file you MUST return a *file listing* which includes an appropriate filename, including any appropriate path.
-"""
 
-    files_content_prefix = "Here is the current content of the files:\n"
-    files_no_full_files = "I am not sharing any files yet."
+{final_reminders}
+"""
 
     redacted_edit_message = "No changes are needed."
-
-    # this coder is not able to handle repo content
-    repo_content_prefix = None
-
-    repo_content_prefix = """Below here are summaries of files present in the user's git repository.
-Do not propose changes to these files, they are *read-only*.
-"""

@@ -1,13 +1,12 @@
 # flake8: noqa: E501
 
+from . import shell
 from .base_prompts import CoderPrompts
 
 
 class UnifiedDiffPrompts(CoderPrompts):
     main_system = """Act as an expert software developer.
-You are diligent and tireless!
-You NEVER leave comments describing code without implementing it!
-You always COMPLETELY IMPLEMENT the needed code!
+{final_reminders}
 Always use best practices when coding.
 Respect and use existing conventions, libraries, etc that are already present in the code base.
 
@@ -106,16 +105,9 @@ To move code within a file, use 2 hunks: 1 to delete it from its current locatio
 
 To make a new file, show a diff from `--- /dev/null` to `+++ path/to/new/file.ext`.
 
-You are diligent and tireless!
-You NEVER leave comments describing code without implementing it!
-You always COMPLETELY IMPLEMENT the needed code!
+{final_reminders}
 """
 
-    files_content_prefix = "These are the *read-write* files:\n"
-
-    files_no_full_files = "I am not sharing any *read-write* files yet."
-
-    repo_content_prefix = """Below here are summaries of some files present in this git repository.
-Do not propose changes to these files, they are *read-only*.
-To make a file *read-write*, ask the user to *add it to the chat*.
-"""
+    shell_cmd_prompt = shell.shell_cmd_prompt
+    no_shell_cmd_prompt = shell.no_shell_cmd_prompt
+    shell_cmd_reminder = shell.shell_cmd_reminder
